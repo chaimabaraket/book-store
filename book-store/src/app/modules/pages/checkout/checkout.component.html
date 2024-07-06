@@ -1,0 +1,55 @@
+<table class="table" >
+  <thead>
+  <tr>
+    <th scope="col">Cart</th>
+    <th scope="col">Customer Details</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <th>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Full Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let item of cart$">
+          <tr>
+            <th>{{item.bookTitle}}</th>
+            <th>${{item.price}}</th>
+            <th>{{item.quantity}}</th>
+            <th>${{item.quantity * item.price | number:'1.2-2'}}</th>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+      <p>Full price: ${{fullPrice | number:'1.2-2'}}</p>
+      <a *ngIf="user.address != null && user.phone != null; else offBlock"
+         routerLink="/orders" class="btn proceed btn-lg btn-outline-primary" (click)="checkout()" >
+        Proceed
+      </a>
+      <ng-template #offBlock>
+        <a class="btn proceed btn-lg btn-outline-primary disabled"
+           ngbTooltip="Fill the gaps in Your profile" placement="bottom" [openDelay]="300" [closeDelay]="500">
+          Proceed
+        </a>
+      </ng-template>
+    </th>
+    <th>
+      <p>Username: {{user.username}}</p>
+      <p>Email: {{user.email}}</p>
+      <p>Address: {{user.address}}</p>
+      <p>Phone: {{user.phone}}</p>
+      <a routerLink="/user" class="btn change btn-lg btn-outline-primary" >Change</a>
+    </th>
+  </tr>
+  </tbody>
+</table>
+
+
+

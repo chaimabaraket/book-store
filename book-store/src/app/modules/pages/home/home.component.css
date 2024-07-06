@@ -1,0 +1,46 @@
+.carousel {
+  max-width: 100%;
+  height: auto;
+  position: absolute;
+  border: none;
+}
+*:focus {
+  outline: none;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.quote {
+  position: absolute;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-size: 30px;
+  text-transform: uppercase;
+  opacity: 1;
+  z-index: 2;
+}
+
+#first {
+  margin-top: 30vh;
+  margin-left: 10vw;
+}
+
+#second {
+  margin-top: -50px;
+  margin-left: 17vw;
+}
+
+.books {
+  margin-left: 200px;
+  color: whitesmoke;
+  background-color: black;
+  padding: 20px;
+  letter-spacing: 5px;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+

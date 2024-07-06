@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <!-- Search input and button -->
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" [(ngModel)]="query" placeholder="Enter search keywords...">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="button" (click)="search()">Search</button>
+    </div>
+  </div>
+
+  <!-- Author search input -->
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" [(ngModel)]="authorQuery" placeholder="Search by author...">
+  </div>
+
+  <!-- Price range slider -->
+  <div class="mb-3">
+    <label for="priceRange" class="form-label">Price Range:</label>
+    <input type="range" class="form-range" id="priceRange"
+           [(ngModel)]="priceRange" (input)="filterBooks()"
+           min="0" max="1000" step="10">
+    <div class="mt-2">
+      Min Price: {{ priceRange[0] | currency }}
+      Max Price: {{ priceRange[1] | currency }}
+    </div>
+  </div>
+
+  <!-- Display search results -->
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div *ngFor="let book of books" class="col">
+      <div class="card h-100">
+        <img class="card-img-top" src="../../../../assets/images/ds.jpg" alt="Book Cover">
+        <div class="card-body">
+          <h5 class="card-title">{{ book.title }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ book.author?.name }}</h6>
+          <p class="card-text">{{ book.description }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <div>
+            <p class="card-text">Price: {{ book.price | currency }}</p>
+            <div class="number-input">
+              <input class="quantity" min="1" max="5" name="quantity" value="1" type="number">
+            </div>
+          </div>
+          <ng-container *ngIf="book.bookStock !== 0; else offBlock">
+            <button (click)="addToCart(book.bookId)" class="btn btn-primary">Add to Cart</button>
+          </ng-container>
+          <ng-template #offBlock>
+            <button class="btn btn-secondary disabled">Out of Stock</button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <ul class="pagination justify-content-center mt-4">
+    <li class="page-item" *ngIf="page > 1; else previous">
+      <a class="page-link"
+         [routerLink]="['/books']"
+         [queryParams]="{ page: page - 1, size: size }">
+        Previous
+      </a>
+    </li>
+    <li class="page-item" *ngIf="books.length === size && books.length < totalBooks; else next">
+      <a class="page-link"
+         [routerLink]="['/books']"
+         [queryParams]="{ page: page + 1, size: size }">
+        Next
+      </a>
+    </li>
+    <ng-template #previous>
+      <li class="page-item disabled">
+        <a class="page-link">Previous</a>
+      </li>
+    </ng-template>
+    <ng-template #next>
+      <li class="page-item disabled">
+        <a class="page-link">Next</a>
+      </li>
+    </ng-template>
+  </ul>
+</div>

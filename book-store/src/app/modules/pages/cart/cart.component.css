@@ -1,0 +1,40 @@
+.remove {
+  background-color: transparent;
+  color: black;
+  box-sizing: border-box;
+  text-align: center;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-size: 15px;
+  text-transform: uppercase;
+  padding: 3px 5px;
+  opacity: 1;
+  border: 0;
+}
+
+.checkoutBtn {
+  background-color: transparent;
+  color: black;
+  box-sizing: border-box;
+  text-align: center;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-size: 20px;
+  text-transform: uppercase;
+  padding: 3px 5px;
+  opacity: 1;
+  border-color: black;
+}
+
+.checkout {
+  padding-left: 45vw;
+  margin-bottom: 20px;
+}
+.checkoutBtn:hover{
+  background-color: gray;
+  color: #cecece;
+}
+
+.remove:hover {
+  font-weight: bold;
+}

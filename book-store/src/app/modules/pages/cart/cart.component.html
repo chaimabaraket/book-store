@@ -1,0 +1,37 @@
+<div class="cart-body">
+  <table class="table table-striped" >
+<thead>
+<tr>
+  <th scope="col">ID</th>
+  <th scope="col">Title</th>
+  <th scope="col">Author</th>
+  <th scope="col">Price</th>
+  <th scope="col">Quantity</th>
+  <th scope="col">Full Price</th>
+  <th scope="col">Remove from cart</th>
+</tr>
+</thead>
+    <tbody>
+    <ng-container *ngFor="let item of cart$">
+    <tr>
+      <th scope="row">{{item.bookId}}</th>
+      <th>{{item.bookTitle}}</th>
+      <th>{{item.bookAuthor}}</th>
+      <th>${{item.price}}</th>
+      <th>{{item.quantity}}</th>
+      <th>${{item.quantity * item.price | number:'1.2-2'}}</th>
+      <th><a class="btn remove btn-lg btn-outline-primary" (click)="removeFromCart(item.bookId)" >Remove</a></th>
+    </tr>
+    </ng-container>
+    </tbody>
+  </table>
+  <div *ngIf="!isLogged" class="alert alert-info">
+    You must be logged in to see books in cart...
+  </div>
+  <div *ngIf="cart$.length == 0 && isLogged" class="alert alert-info">
+    No books in cart...
+  </div>
+  <div class="checkout" *ngIf="cart$.length != 0">
+    <a routerLink="/checkout" class="btn checkoutBtn btn-lg btn-outline-primary" >Checkout</a>
+  </div>
+</div>

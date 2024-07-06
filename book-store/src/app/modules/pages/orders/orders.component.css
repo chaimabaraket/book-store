@@ -1,0 +1,36 @@
+*{
+  background-color: whitesmoke;
+}
+
+.detailsTable {
+  margin-left: 50px;
+  width: 100%;
+}
+
+.orderDetails {
+  margin-left: 50px;
+}
+
+.booksDetails {
+  padding: 10px;
+  position: absolute;
+}
+
+button {
+  background-color: transparent;
+  color: black;
+  box-sizing: border-box;
+  text-align: center;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-size: 20px;
+  text-transform: uppercase;
+  padding: 3px 5px;
+  opacity: 1;
+  border-color: black;
+}
+
+button:hover{
+  background-color: gray;
+  color: #cecece;
+}

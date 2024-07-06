@@ -1,0 +1,64 @@
+.container {
+  padding-top: 20px;
+  font-size: 17px;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  text-decoration: none;
+  background-color: whitesmoke;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  background-color: transparent;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+}
+
+.errorHandler {
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.btn {
+  display: inline-block;
+  font-size: 1.4rem;
+  letter-spacing: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  position: relative;
+  border: 0;
+  background-color: transparent;
+}
+
+.btn:after {
+  content: '';
+  display: block;
+  margin: auto;
+  height: 3px;
+  width: 0;
+  background: transparent;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+.btn:hover:after {
+  width: 100%;
+  background: black;
+}
+
+.alert {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.alert-link {
+  font-weight: bold;
+  text-decoration: underline;
+}
