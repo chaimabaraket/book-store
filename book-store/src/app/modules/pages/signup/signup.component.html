@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <form [formGroup]="signupForm" (ngSubmit)="submit()">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign Up</h5>
+
+            <div *ngIf="isSuccess" class="alert alert-success" role="alert">
+              Sign Up Successful! <a href="/login" class="alert-link">Click here to login.</a>
+            </div>
+
+            <div *ngIf="!isSuccess">
+              <div class="form-group">
+                <label for="InputEmail">Email address</label>
+                <input type="email" class="form-control" id="InputEmail" formControlName="email" placeholder="Enter email"
+                       [ngClass]="{'is-invalid': signupForm.controls['email'].invalid && signupForm.controls['email'].touched}">
+                <div *ngIf="signupForm.controls['email'].invalid && signupForm.controls['email'].touched" class="text-danger errorHandler">
+                  <div *ngIf="signupForm.controls['email'].hasError('required')">Email is required!</div>
+                  <div *ngIf="signupForm.controls['email'].hasError('email')">Enter a valid email address!</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="InputUsername">Username</label>
+                <input type="text" formControlName="username" class="form-control" id="InputUsername" placeholder="Enter username"
+                       [ngClass]="{'is-invalid': signupForm.controls['username'].invalid && signupForm.controls['username'].touched}">
+                <div *ngIf="signupForm.controls['username'].invalid && signupForm.controls['username'].touched" class="text-danger errorHandler">
+                  <div *ngIf="signupForm.controls['username'].hasError('required')">Username is required!</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="InputPassword">Password</label>
+                <input type="password" class="form-control" formControlName="password" id="InputPassword" placeholder="Enter password"
+                       [ngClass]="{'is-invalid': signupForm.controls['password'].invalid && signupForm.controls['password'].touched}">
+                <div *ngIf="signupForm.controls['password'].invalid && signupForm.controls['password'].touched" class="text-danger errorHandler">
+                  <div *ngIf="signupForm.controls['password'].hasError('required')">Password is required!</div>
+                  <div *ngIf="signupForm.controls['password'].hasError('minlength')">Must have at least 5 characters!</div>
+                  <div *ngIf="signupForm.controls['password'].hasError('hasNumber')">Must have at least 1 number!</div>
+                  <div *ngIf="signupForm.controls['password'].hasError('hasCapitalCase')">Must have at least 1 Capital Case!</div>
+                  <div *ngIf="signupForm.controls['password'].hasError('hasSmallCase')">Must have at least 1 Small Case!</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="InputConfirmPassword">Confirm password</label>
+                <input type="password" class="form-control" id="InputConfirmPassword" formControlName="confirmPassword" placeholder="Confirm password"
+                       [ngClass]="{'is-invalid': signupForm.controls['confirmPassword'].invalid && signupForm.controls['confirmPassword'].touched}">
+                <div *ngIf="signupForm.controls['confirmPassword'].invalid && signupForm.controls['confirmPassword'].touched" class="text-danger errorHandler">
+                  <div *ngIf="signupForm.controls['confirmPassword'].hasError('required')">Confirm password is required!</div>
+                  <div *ngIf="signupForm.controls['confirmPassword'].hasError('mismatch')">Passwords must match!</div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-lg btn signup float-right" [disabled]="signupForm.invalid">Sign Up</button>
+
+              <div class="login-failed mt-3" *ngIf="isError">
+                <p class="text-danger">Sign Up Failed. Please check your credentials and try again.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

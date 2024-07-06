@@ -1,0 +1,87 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User info</th>
+      <th scope="col">Change password</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>
+        <form [formGroup]="updateInfoForm" (ngSubmit)="updateInfo()">
+          <div class="form-group">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control-plaintext" id="staticEmail" formControlName="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="staticUsername" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control-plaintext" id="staticUsername" formControlName="username">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="InputPhone" class="col-sm-2 col-form-label">Phone</label>
+            <div class="col-sm-10">
+              <input type="tel" class="form-control" id="InputPhone" formControlName="phone">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="InputAddress" class="col-sm-2 col-form-label">Address</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="InputAddress" formControlName="address">
+            </div>
+          </div>
+
+          <button type="submit" class="btn from-center btn-light mx-auto"
+                  style="text-align:center;display:block;">
+            Update info
+          </button>
+        </form>
+      </th>
+      <th>
+        <form [formGroup]="updatePasswordForm" (ngSubmit)="updatePassword()">
+          <div class="form-group errorHandler">
+            <label for="InputOldPassword">Old password</label>
+            <input type="password" class="form-control" id="InputOldPassword" formControlName="oldPassword"
+                   placeholder="Enter old password">
+          </div>
+          <div class="form-group errorHandler">
+            <label for="InputNewPassword">New password</label>
+            <input type="password" class="form-control" id="InputNewPassword" formControlName="password"
+                   placeholder="Enter new password">
+            <!--Error handling -->
+            <label class="text-danger" *ngIf="updatePasswordForm.controls['password'].hasError('hasNumber')" style="font-size: 13px">
+              Must have at least 1 number!
+            </label>
+            <label class="text-danger" *ngIf="updatePasswordForm.controls['password'].hasError('hasCapitalCase')"
+                   style="font-size: 13px">
+              Must have at least 1 Capital Case!
+            </label>
+            <label class="text-danger" *ngIf="updatePasswordForm.controls['password'].hasError('hasSmallCase')" style="font-size: 13px">
+              Must have at least 1 Small Case!
+            </label>
+            <label class="text-danger" *ngIf="!updatePasswordForm.controls['password'].valid
+           && updatePasswordForm.get('password').touched" style="font-size: 13px">
+              Must have at least 5 characters!
+            </label>
+          </div>
+          <button type="submit" class="btn from-center btn-light mx-auto"
+                  style="text-align:center;display:block;" ngbTooltip="Password!">
+            Update password
+          </button>
+          <div class="login-failed" *ngIf="this.isError">
+            <p class="login-failed-text">Password change Failed. Please check your passwords and try again.</p>
+          </div>
+          <div *ngIf="passwordUpdated" class="alert-success">
+            <p>Password has been changed</p>
+          </div>
+        </form>
+      </th>
+    </tr>
+  </tbody>
+</table>

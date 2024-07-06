@@ -1,0 +1,48 @@
+img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.navbar {
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-size: 20px;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.home, .books, .contact {
+  color: black;
+}
+
+.icons img {
+  width: 25px;
+  height: 25px;
+}
+
+.icons a {
+  padding-left: 2em;
+  position: relative; /* Ensure positioning context for the badge */
+}
+
+.bookstore-text {
+  color: rgb(0, 0, 0);
+  float: left;
+}
+
+.cart {
+  position: relative;
+}
+
+.cart-quantity {
+  position: absolute;
+  top: -10px; /* Adjust this value to position the badge correctly */
+  left: 15px; /* Adjust this value to position the badge correctly */
+  background-color: red; /* Customize the color */
+  color: white; /* Customize the text color */
+  padding: 2px 5px;
+  border-radius: 50%;
+  font-size: 0.75em;
+  font-weight: bold;
+}

@@ -1,0 +1,112 @@
+<div class="orders-body">
+  <table class="table-responsive">
+    <thead>
+    <tr>
+      <th scope="col">Orders</th>
+      <th scope="col">Order Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>
+        <table class="table-striped table">
+          <thead>
+          <tr>
+            <th scope="col">Order Id</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Final Price</th>
+            <th scope="col">Finished</th>
+            <th scope="col">Details</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let order of orders$">
+            <tr>
+              <th>{{order.orderId}}</th>
+              <th>{{order.createdAt}}</th>
+              <th>${{order.finalPrice}}</th>
+              <th>{{order.finished}}</th>
+              <th>
+                <button class="btn show btn-lg btn-outline-primary" (click)=getDetails(order.orderId)>Show</button>
+              </th>
+            </tr>
+          </ng-container>
+          </tbody>
+
+          <!--Pagination controls-->
+          <tr>
+            <div class="col-md-12 column">
+              <ul class="pagination">
+                <li class="page-item" *ngIf="page > 1; else previous">
+                  <a class="page-link"
+                     [routerLink]="['/orders']"
+                     [queryParams]="{
+          page: page - 1,
+          size: size
+        }">
+                    << Previous
+                  </a>
+                </li>
+                <li class="page-item" *ngIf="orders$.length == size; else next">
+                  <a class="page-link"
+                     [routerLink]="['/orders']"
+                     [queryParams]="{
+          page: page + 1,
+          size: size
+        }">
+                    Next >>
+                  </a>
+                </li>
+                <ng-template #previous>
+                  <li class="page-item  disabled"><a class="page-link">Previous</a></li>
+                </ng-template>
+                <ng-template #next>
+                  <li class="page-item  disabled">
+                    <a class="page-link">
+                      Next
+                    </a>
+                  </li>
+                </ng-template>
+              </ul>
+            </div>
+          </tr>
+          <!--Pagination controls-->
+
+        </table>
+      </th>
+
+      <!--Order details-->
+
+      <th>
+        <div *ngIf="showInfo" class="details">
+          <table class="detailsTable">
+            <tbody>
+            <tr class="orderDetails">
+              <th>
+                <p>Order Id: {{orderDetails.orderId}}</p>
+                <p>Created at: {{orderDetails.createdAt}}</p>
+                <p>Final Price: ${{orderDetails.finalPrice}}</p>
+                <p>Buyer Username: {{orderDetails.buyerUsername}}</p>
+                <p>Buyer Email: {{orderDetails.buyerEmail}}</p>
+                <p>Buyer Phone: {{orderDetails.buyerPhone}}</p>
+                <p>Buyer Address: {{orderDetails.buyerAddress}}</p>
+              </th>
+              <th class="booksDetails">
+                <p>Books</p>
+                <ng-container *ngFor="let item of orderDetails.cartItems">
+                  <p>Title: {{item.bookTitle}} Price: {{item.price}} Quantity: {{item.quantity}}</p>
+                </ng-container>
+              </th>
+            </tr>
+            <button class="btn close btn-lg btn-outline-primary" (click)=close()>Close</button>
+            </tbody>
+          </table>
+        </div>
+      </th>
+      
+      <!--Order details-->
+
+    </tr>
+    </tbody>
+  </table>
+</div>

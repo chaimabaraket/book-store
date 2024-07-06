@@ -1,0 +1,30 @@
+header {
+  border-radius: 1px;
+}
+.navbar {
+  background-color: black;
+}
+
+.login, .signup {
+  background-color: transparent;
+  color: rgba(245, 245, 245, 0.8);
+  box-sizing: border-box;
+  text-align: center;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-size: 15px;
+  text-transform: uppercase;
+  padding: 3px 5px;
+  opacity: 1;
+  border: 0;
+}
+
+.signup:hover, .login:hover{
+  opacity: 0.6;
+}
+
+.bookstore-text {
+  color: rgba(245, 245, 245, 0.8);
+  letter-spacing: 1px;
+  font-size: 15px;
+}

@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="flex-grow-1">
+    <span class="bookstore-text font-weight-light">
+      <img src="../../../../assets/icons/book.svg">
+      Your Book Store
+    </span>
+  </div>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a routerLink="/" class="float-md-none home mr-5">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a routerLink="/books" class="float-md-none books mr-5 ml-5">Books</a>
+      </li>
+      <li class="nav-item active">
+        <a routerLink="/contact" class="float-md-none contact ml-5">Contact</a>
+      </li>
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <span class="icons">
+        <div *ngIf="!getUsername(); else elseBlock">
+          <a routerLink="/search"><img src="../../../../assets/icons/loupe.svg" class="search"></a>
+          <a>
+            <img src="../../../../assets/icons/shop.svg" class="cart"
+                 ngbTooltip="You must log in to see cart." placement="left" [openDelay]="300" [closeDelay]="500">
+          </a>
+          <a>
+            <img src="../../../../assets/icons/orders.svg" class="order"
+                 ngbTooltip="You must log in to see your orders." placement="left" [openDelay]="300"
+                 [closeDelay]="500">
+          </a>
+          <a>
+            <img src="../../../../assets/icons/avatar.svg" class="user"
+                 ngbTooltip="You must log in to see your profile." placement="left" [openDelay]="300"
+                 [closeDelay]="500">
+          </a>
+        </div>
+
+        <ng-template #elseBlock>
+          <a routerLink="/search"><img src="../../../../assets/icons/loupe.svg" class="search"></a>
+          <a routerLink="/cart">
+            <img src="../../../../assets/icons/shop.svg" class="cart">
+            <!-- Show cart quantity only if there is a logged-in user -->
+            <span class="badge badge-pill badge-danger cart-quantity">{{ cartQuantity }}</span>
+          </a>
+          <a routerLink="/orders"><img src="../../../../assets/icons/orders.svg" class="order"></a>
+          <a routerLink="/user"><img src="../../../../assets/icons/avatar.svg" class="user"></a>
+          <a routerLink="/add-books"><img src="../../../../assets/icons/plus.svg" class="add-book"></a> <!-- Plus Button -->
+          <span class="navbar-text ml-2">{{ getUsername() }}</span> <!-- Username display -->
+        </ng-template>
+      </span>
+    </div>
+  </div>
+</nav>
