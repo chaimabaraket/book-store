@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EmailjsService } from '../../../core/service/contact-service/emailjs.service';
 
 @Component({
   selector: 'app-contact',
@@ -8,9 +9,14 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
+[x: string]: any;
   contactForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private modalService: NgbModal) {
+  constructor(
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private emailjsService: EmailjsService
+  ) {
     this.contactForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -24,13 +30,23 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      this.openSuccessModal();
-      this.contactForm.reset();
+      const { firstName, lastName, email, phone, description } = this.contactForm.value;
+
+      this.emailjsService.sendEmail(firstName, lastName, email, phone, description)
+        .then(response => {
+          console.log('Email sent:', response.status, response.text);
+          this.openSuccessModal();
+          this.contactForm.reset();
+        }, error => {
+          console.error('Error sending email:', error);
+          // Handle error as needed
+        });
     }
   }
 
   openSuccessModal() {
-    this.modalService.open(SuccessModalContent);
+    const modalRef = this.modalService.open(SuccessModalContent, { centered: true });
+    modalRef.componentInstance.modalMessage = 'Your message has been sent successfully!';
   }
 }
 
@@ -42,7 +58,7 @@ export class ContactComponent implements OnInit {
       <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      Your message has been sent successfully!
+      {{ modalMessage }}
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
@@ -50,5 +66,7 @@ export class ContactComponent implements OnInit {
   `
 })
 export class SuccessModalContent {
+  modalMessage: string;
+
   constructor(public activeModal: NgbActiveModal) {}
 }

@@ -1,122 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
-  <style>
-    .card {
-      border: none;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-    .card img {
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-    }
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-    .card-text.description {
-      color: #6c757d;
-      margin-bottom: 0.75rem;
-    }
-    .card-footer {
-      background-color: #f8f9fa;
-      border-top: none;
-      text-align: center;
-      padding: 0.75rem 1rem;
-    }
-    .number-input input {
-      width: 50px;
-      text-align: center;
-      border: 1px solid #ced4da;
-      border-radius: 5px;
-    }
-    .pagination {
-      margin-top: 20px;
-    }
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-      padding: 0.5rem 1rem;
-    }
-    .btn-secondary {
-      background-color: #6c757d;
-      border-color: #6c757d;
-      padding: 0.5rem 1rem;
-    }
-  </style>
-  <title>Book List</title>
-</head>
-<body>
-  <div class="container mt-4">
-    <div class="book-body">
-      <div class="row">
-        <div class="col-12">
-          <div class="row g-3">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let book of books$">
-              <div class="card h-100">
-                <img class="card-img-top" src="../../../../assets/images/ds.jpg" alt="Book Cover">
-                <div class="card-body">
-                  <h5 class="card-title">{{ book.title }}</h5>
-                  <p class="card-text description">{{ book.description }}</p>
+<div class="container mt-4">
+  <div class="book-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="row g-3">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let book of books$">
+            <div class="card h-100">
+              <img class="card-img-top" src="../../../../assets/images/ds.jpg" alt="Book Cover">
+              <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <p class="card-text description">{{ book.description }}</p>
+              </div>
+              <div class="card-footer">
+                <p class="card-text">Price: {{ book.price | currency }}</p>
+                <div class="number-input">
+                  <form [formGroup]="cartForm">
+                    <input [formControlName]="'quantity'" class="quantity" min="1" max="5" name="quantity" value="1" type="number">
+                  </form>
                 </div>
-                <div class="card-footer">
-                  <p class="card-text">Price: {{ book.price | currency }}</p>
-                  <div class="number-input">
-                    <form [formGroup]="cartForm">
-                      <input [formControlName]="'quantity'" class="quantity" min="1" max="5" name="quantity" value="1" type="number">
-                    </form>
-                  </div>
-                  <ng-container *ngIf="book.bookStock !== 0; else offBlock">
-                    <a (click)="addToCart(book.bookId)" class="btn btn-primary">Add to Basket</a>
-                  </ng-container>
-                  <ng-template #offBlock>
-                    <a class="btn btn-secondary disabled">Currently Unavailable</a>
-                  </ng-template>
+                <ng-container *ngIf="book.bookStock !== 0; else offBlock">
+                  <a (click)="addToCart(book.bookId)" class="btn btn-primary">Add to Basket</a>
+                </ng-container>
+                <ng-template #offBlock>
+                  <a class="btn btn-secondary disabled">Currently Unavailable</a>
+                </ng-template>
+                <!-- Admin Actions (Edit and Delete) -->
+                <div *ngIf="isAdmin()" class="admin-actions mt-2">
+
+                  <a (click)="editBook(book.bookId)" class="btn btn-info">
+                    <img src="../../../../assets/icons/edit.svg" alt="Edit" class="icon"> Edit
+                  </a>
+                  <a (click)="deleteBook(book.bookId)" class="btn btn-danger ml-2">
+                    <img src="../../../../assets/icons/delete.svg" alt="Delete" class="icon"> Delete
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12">
-          <ul class="pagination justify-content-center mt-4">
-            <li class="page-item" *ngIf="page > 1; else previous">
-              <a class="page-link"
-                 [routerLink]="['/books']"
-                 [queryParams]="{ page: page - 1, size: size }">
-                Previous
-              </a>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <ul class="pagination justify-content-center mt-4">
+          <li class="page-item" *ngIf="page > 1; else previous">
+            <a class="page-link"
+               [routerLink]="['/books']"
+               [queryParams]="{ page: page - 1, size: size }">
+              Previous
+            </a>
+          </li>
+          <li class="page-item" *ngIf="books$.length === size; else next">
+            <a class="page-link"
+               [routerLink]="['/books']"
+               [queryParams]="{ page: page + 1, size: size }">
+              Next
+            </a>
+          </li>
+          <ng-template #previous>
+            <li class="page-item disabled">
+              <a class="page-link">Previous</a>
             </li>
-            <li class="page-item" *ngIf="books$.length === size; else next">
-              <a class="page-link"
-                 [routerLink]="['/books']"
-                 [queryParams]="{ page: page + 1, size: size }">
-                Next
-              </a>
+          </ng-template>
+          <ng-template #next>
+            <li class="page-item disabled">
+              <a class="page-link">Next</a>
             </li>
-            <ng-template #previous>
-              <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-              </li>
-            </ng-template>
-            <ng-template #next>
-              <li class="page-item disabled">
-                <a class="page-link">Next</a>
-              </li>
-            </ng-template>
-          </ul>
-        </div>
+          </ng-template>
+        </ul>
       </div>
     </div>
   </div>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>

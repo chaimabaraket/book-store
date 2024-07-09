@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
@@ -12,12 +13,34 @@ export class NavbarComponent implements OnInit {
   role: string | null = null;
   cartQuantity: number = 0;
 
-  constructor(private localStorage: LocalStorageService) { }
+  constructor(
+    private localStorage: LocalStorageService,
+    private router: Router,
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
+    this.loadUserDetails(); // Load user details initially
+
+    // Subscribe to changes in local storage (if necessary)
+    this.localStorage.observe('username').subscribe(() => {
+      this.loadUserDetails();
+    });
+    this.localStorage.observe('role').subscribe(() => {
+      this.loadUserDetails();
+    });
+    this.localStorage.observe('cartQuantity').subscribe(() => {
+      this.loadUserDetails();
+    });
+  }
+
+  private loadUserDetails() {
     this.username = this.localStorage.retrieve('username') || null;
     this.role = this.localStorage.retrieve('role') || null;
     this.cartQuantity = this.localStorage.retrieve('cartQuantity') || 0;
+
+    // Manually trigger change detection
+    this.cdr.detectChanges();
   }
 
   getUsername() {
@@ -26,5 +49,9 @@ export class NavbarComponent implements OnInit {
 
   isAdmin() {
     return this.role === 'ROLE_ADMIN';
+  }
+
+  handleNavigation(page: string) {
+    this.router.navigate([`/${page}`]);
   }
 }

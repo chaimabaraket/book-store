@@ -26,4 +26,12 @@ export class BookService {
   addBook(book: BookModel): Observable<BookModel> {
     return this.httpClient.post<BookModel>("http://localhost:8089/api/books/add", book);
   }
+
+  deleteBook(bookId: number): Observable<any> {
+    return this.httpClient.delete(`${this.apiUrl}/${bookId}`);
+  }
+
+  editBook(book: BookModel): Observable<BookModel> {
+    return this.httpClient.put<BookModel>(`${this.apiUrl}/edit/${book.bookId}`, book);
+  }
 }

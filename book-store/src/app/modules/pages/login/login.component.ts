@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         console.log("success auth", data);
 
         this.isError = false;
-        this.router.navigateByUrl('');
+        this.router.navigate(['/']);
       });
   }
 }

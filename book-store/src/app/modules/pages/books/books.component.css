@@ -1,3 +1,69 @@
 .book-body {
   background-color: whitesmoke;
 }
+
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.card img {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  height: 300px; /* Adjust height as needed */
+  object-fit: cover; /* Ensure the image covers the entire card */
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.card-text.description {
+  color: #6c757d;
+  margin-bottom: 0.75rem;
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  border-top: none;
+  text-align: center;
+  padding: 0.75rem 1rem;
+}
+
+.number-input input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.pagination {
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 0.5rem 1rem;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  padding: 0.5rem 1rem;
+}
+.admin-actions .icon {
+  width: 20px; /* Adjust icon size as needed */
+  height: auto;
+  margin-right: 5px;
+}
+

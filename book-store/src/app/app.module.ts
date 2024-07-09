@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 import { SignupComponent } from './modules/pages/signup/signup.component';
 import { SearchComponent } from './modules/pages/search/search.component';
 import { MatSliderModule } from '@angular/material/slider'; // Import MatSliderModule
+import { EditBookComponent } from './modules/pages/edit-book/edit-book.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { MatSliderModule } from '@angular/material/slider'; // Import MatSliderM
     OrdersComponent,
     ContactComponent,
     AddBookComponent,
+    EditBookComponent,
     SearchComponent
   ],
   imports: [
@@ -57,8 +59,8 @@ import { MatSliderModule } from '@angular/material/slider'; // Import MatSliderM
     CommonModule,
     FormsModule,
     MatSliderModule
-    
-    
+
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

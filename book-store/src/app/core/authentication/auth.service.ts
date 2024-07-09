@@ -30,6 +30,8 @@ export class AuthService {
       tap(response => {
         this.setToken(response.token);
         this.setUsername(response.username);
+        console.log("response.role",response.role);
+
         this.setRole(response.role);
       })
     );

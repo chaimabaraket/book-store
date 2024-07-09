@@ -8,19 +8,19 @@
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a routerLink="/" class="float-md-none home mr-5">Home</a>
+        <a (click)="handleNavigation('')" class="float-md-none home mr-5 nav-item">Home</a>
       </li>
       <li class="nav-item active">
-        <a routerLink="/books" class="float-md-none books mr-5 ml-5">Books</a>
+        <a (click)="handleNavigation('books')" class="float-md-none books mr-5 ml-5 nav-item">Books</a>
       </li>
       <li class="nav-item active">
-        <a routerLink="/contact" class="float-md-none contact ml-5">Contact</a>
+        <a  (click)="handleNavigation('contact')" class="float-md-none contact ml-5 nav-item">Contact</a>
       </li>
     </ul>
     <div class="form-inline my-2 my-lg-0">
       <span class="icons">
         <div *ngIf="!getUsername(); else elseBlock">
-          <a routerLink="/search"><img src="../../../../assets/icons/loupe.svg" class="search"></a>
+          <a   (click)="handleNavigation('search')"><img src="../../../../assets/icons/loupe.svg" class="search nav-item"></a>
           <a>
             <img src="../../../../assets/icons/shop.svg" class="cart"
                  ngbTooltip="You must log in to see cart." placement="left" [openDelay]="300" [closeDelay]="500">
@@ -38,16 +38,17 @@
         </div>
 
         <ng-template #elseBlock>
-          <a routerLink="/search"><img src="../../../../assets/icons/loupe.svg" class="search"></a>
-          <a routerLink="/cart">
+          <a (click)="handleNavigation('search')" class="nav-item"><img src="../../../../assets/icons/loupe.svg" class="search"></a>
+          <a  (click)="handleNavigation('cart')" class="nav-item">
             <img src="../../../../assets/icons/shop.svg" class="cart">
             <!-- Show cart quantity only if there is a logged-in user -->
             <span class="badge badge-pill badge-danger cart-quantity">{{ cartQuantity }}</span>
           </a>
-          <a routerLink="/orders"><img src="../../../../assets/icons/orders.svg" class="order"></a>
-          <a routerLink="/user"><img src="../../../../assets/icons/avatar.svg" class="user"></a>
-          <a routerLink="/add-books"><img src="../../../../assets/icons/plus.svg" class="add-book"></a> <!-- Plus Button -->
-          <span class="navbar-text ml-2">{{ getUsername() }}</span> <!-- Username display -->
+          <a  (click)="handleNavigation('orders')"><img src="../../../../assets/icons/orders.svg" class="order nav-item"></a>
+          <a   (click)="handleNavigation('user')"><img src="../../../../assets/icons/avatar.svg" class="user nav-item"></a>
+          <a *ngIf="isAdmin()" (click)="handleNavigation('add-books')">
+            <img src="../../../../assets/icons/plus.svg" class="add-book nav-item">
+          </a>          <span class="navbar-text ml-2">{{ getUsername() }}</span> <!-- Username display -->
         </ng-template>
       </span>
     </div>

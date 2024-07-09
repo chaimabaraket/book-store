@@ -24,16 +24,17 @@ export class HeaderComponent implements OnInit {
   }
 
   openSignup(): void {
-    this.router.navigateByUrl('/signup');
+    this.router.navigate(['/signup']);
+
   }
 
   openLogin(): void {
-    this.router.navigateByUrl('/login');
+    this.router.navigate(['/login']);
   }
 
   logout(): void {
     this.authService.logout(); // Clear authentication state
     this.updateUserInfo(); // Update UI state
-    this.router.navigateByUrl('/'); // Navigate to home or login page
+    this.router.navigate(['/']);
   }
 }

@@ -12,11 +12,13 @@ import { AddBookComponent } from './modules/pages/add-book/add-book.component';
 import { LoginComponent } from './modules/pages/login/login.component';
 import { SignupComponent } from './modules/pages/signup/signup.component';
 import { SearchComponent } from './modules/pages/search/search.component';
+import { EditBookComponent } from './modules/pages/edit-book/edit-book.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'books', component: BooksComponent},
   {path: 'add-books', component: AddBookComponent},
+  {path: 'edit-books/:id', component: EditBookComponent},
   {path: 'cart', component: CartComponent},
   {path: 'user', component: UserpageComponent},
   {path: 'checkout', component: CheckoutComponent},

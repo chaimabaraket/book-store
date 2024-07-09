@@ -38,11 +38,16 @@ img {
 .cart-quantity {
   position: absolute;
   top: -10px; /* Adjust this value to position the badge correctly */
-  left: 15px; /* Adjust this value to position the badge correctly */
+  right: -5px; /* Adjust this value to position the badge correctly */
   background-color: red; /* Customize the color */
   color: white; /* Customize the text color */
   padding: 2px 5px;
   border-radius: 50%;
   font-size: 0.75em;
   font-weight: bold;
+}
+
+.nav-item{
+  cursor: pointer;
+
 }

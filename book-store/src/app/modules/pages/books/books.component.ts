@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BookService } from "../../../core/service/book-service/book.service";
-import { BookModel } from "../../../shared/model/book/book-model";
-import { CartService } from "../../../core/service/cart-service/cart.service";
-import { CartDTO } from "../../../core/service/cart-service/cartDTO";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Subscription, throwError } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { BookService } from '../../../core/service/book-service/book.service';
+import { BookModel } from '../../../shared/model/book/book-model';
+import { CartService } from '../../../core/service/cart-service/cart.service';
+import { CartDTO } from '../../../core/service/cart-service/cartDTO';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription, throwError } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-books',
@@ -17,6 +18,8 @@ export class BooksComponent implements OnInit, OnDestroy {
   books$: Array<BookModel> = [];
   page: number = 1;
   size: number = 6;
+  role: string | null = null;
+
   cartDTO: CartDTO = {
     bookId: 0,
     quantity: 0
@@ -26,14 +29,24 @@ export class BooksComponent implements OnInit, OnDestroy {
   });
   private querySub: Subscription = new Subscription();
 
-  constructor(private bookService: BookService,
-              private cartService: CartService,
-              private route: ActivatedRoute) {}
+  constructor(
+    private bookService: BookService,
+    private localStorage: LocalStorageService,
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private router: Router // Inject Router for navigation
+
+  ) {}
 
   ngOnInit(): void {
+    this.loadUserDetails();
     this.querySub = this.route.queryParams.subscribe(() => {
       this.update();
     });
+  }
+
+  private loadUserDetails() {
+    this.role = this.localStorage.retrieve('role') || null;
   }
 
   ngOnDestroy(): void {
@@ -46,7 +59,7 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.getBooks(currentPage, size);
   }
 
-  getBooks(page: number = 1, size: number = 6) {
+  getBooks(page: number = 1, size: number = 9) {
     this.bookService.getAllBooks(page, size).subscribe(books => {
       this.books$ = books;
       this.page = page;
@@ -59,10 +72,29 @@ export class BooksComponent implements OnInit, OnDestroy {
 
     if (this.cartDTO.quantity !== 0) {
       this.cartService.addToCart(this.cartDTO).subscribe(data => {
-        console.log(data);
+        // Handle success if needed
       }, error => {
         throwError(error);
       });
     }
   }
+
+  isAdmin(): boolean {
+    return this.role === 'ROLE_ADMIN';
+  }
+
+  deleteBook(bookId: number) {
+    this.bookService.deleteBook(bookId).subscribe(() => {
+      // Refresh the book list after deletion
+      this.update();
+    }, error => {
+      // Handle error if needed
+      console.error('Error deleting book:', error);
+    });
+  }
+
+  editBook(bookId: number) {
+    this.router.navigate(['/edit-books', bookId]);
+  }
+
 }
